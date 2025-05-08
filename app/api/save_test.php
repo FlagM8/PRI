@@ -47,7 +47,7 @@ try {
     }
 
     // Save to database
-    $db = new Database();
+    $db = Database::getInstance(); // Use the singleton instance
     $userId = $_SESSION['user_id'] ?? null;
 
     if (!$userId) {

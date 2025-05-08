@@ -72,8 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function fetchTestText(languageId) {
         fetch(`api/get_language_words.php?language_id=${languageId}`)
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status); // Log response status
+                return response.json();
+            })
             .then(data => {
+                console.log('Response data:', data); // Log response data
                 if (data.success) {
                     const wordList = data.words.split(',').map(word => word.trim());
                     testText = generateInfiniteWords(wordList);
@@ -84,11 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     timer = setInterval(updateTimer, 1000);
                     trackProgress();
                 } else {
-                    alert('Failed to fetch words for the selected language.');
+                    alert('Failed to fetch words for the selected language: ' + data.message);
                 }
             })
             .catch(error => {
-                console.error('Error fetching words:', error);
+                console.error('Error fetching words:', error); // Log fetch error
                 alert('Error fetching words. Please try again.');
             });
     }

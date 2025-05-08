@@ -9,13 +9,13 @@ if (!isset($_GET['language_id'])) {
 }
 
 $languageId = intval($_GET['language_id']);
-$db = new Database();
+$db = Database::getInstance(); // Use the singleton instance
 
 $language = $db->getLanguageById($languageId);
 
-if ($language) {
+if ($language && isset($language['words'])) {
     echo json_encode(['success' => true, 'words' => $language['words']]);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Language not found.']);
+    echo json_encode(['success' => false, 'message' => 'Language not found or no words available.']);
 }
 ?>

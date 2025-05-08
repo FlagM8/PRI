@@ -2,9 +2,10 @@
 require_once __DIR__ . '/config.php';
 
 class Database {
+    private static $instance = null; // Singleton instance
     private $pdo;
-    
-    public function __construct() {
+
+    private function __construct() {
         try {
             $this->pdo = new PDO("sqlite:" . DB_PATH);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -13,7 +14,28 @@ class Database {
             die("Database connection failed: " . $e->getMessage());
         }
     }
-    
+
+    // Prevent cloning of the instance
+    private function __clone() {}
+
+    // Allow unserialization but ensure it uses the singleton instance
+    public function __wakeup() {
+        throw new Exception("Cannot unserialize a singleton.");
+    }
+
+    // Get the singleton instance
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    // Expose the PDO instance
+    public function getPdo() {
+        return $this->pdo;
+    }
+
     // User related methods
     public function createUser($username, $password, $email = null) {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -101,7 +123,7 @@ class Database {
     
     public function getTestResults($userId, $limit = 10) {
         $stmt = $this->pdo->prepare("
-            SELECT t.*, l.name as language_name, l.type as language_type, l.id
+            SELECT t.*, l.name as language_name, l.type as language_type
             FROM typing_tests t
             JOIN langs l ON t.language_id = l.id
             WHERE t.user_id = ?
@@ -132,42 +154,6 @@ class Database {
         return $details;
     }
     
-    // XML generation methods
-    public function generateUserXml($userId) {
-        $user = $this->getUserById($userId);
-        $tests = $this->getTestResults($userId);
-        
-        $dom = new DOMDocument('1.0', 'UTF-8');
-        $dom->formatOutput = true;
-        
-        $root = $dom->createElement('user');
-        $root->setAttribute('id', $user['id']);
-        $dom->appendChild($root);
-        
-        $userInfo = $dom->createElement('info');
-        $userInfo->appendChild($dom->createElement('username', $user['username']));
-        $userInfo->appendChild($dom->createElement('email', $user['email'] ?? ''));
-        $userInfo->appendChild($dom->createElement('created_at', $user['created_at']));
-        $root->appendChild($userInfo);
-        
-        $testsElem = $dom->createElement('tests');
-        foreach ($tests as $test) {
-            $testElem = $dom->createElement('test');
-            $testElem->setAttribute('id', $test['id']);
-            
-            $testElem->appendChild($dom->createElement('language', $test['language_name']));
-            $testElem->appendChild($dom->createElement('type', $test['language_type']));
-            $testElem->appendChild($dom->createElement('duration', $test['duration']));
-            $testElem->appendChild($dom->createElement('wpm', $test['wpm']));
-            $testElem->appendChild($dom->createElement('accuracy', $test['accuracy']));
-            $testElem->appendChild($dom->createElement('date', $test['date']));
-            
-            $testsElem->appendChild($testElem);
-        }
-        $root->appendChild($testsElem);
-        
-        return $dom->saveXML();
-    }
     
     public function generateTestXml($testId) {
         $test = $this->getTestById($testId);

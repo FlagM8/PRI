@@ -51,29 +51,7 @@ function initialize_database() {
     $db = new PDO('sqlite:' . DB_PATH);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-//     // Create the languages table if it doesn't exist
-//     $db->exec("
-//         CREATE TABLE IF NOT EXISTS languages (
-//             id INTEGER PRIMARY KEY AUTOINCREMENT,
-//             name TEXT NOT NULL,
-//             type TEXT NOT NULL
-//         )
-//     ");
-
-//     // Optionally, insert default data if the table is empty
-//     $stmt = $db->query("SELECT COUNT(*) FROM languages");
-//     if ($stmt->fetchColumn() == 0) {
-//         $db->exec("
-//             INSERT INTO languages (name, type) VALUES
-//             ('English', 'alphabetic'),
-//             ('French', 'alphabetic'),
-//             ('German', 'alphabetic'),
-//             ('Chinese', 'logographic'),
-//             ('Japanese', 'logographic')
-//         ");
-//     }
 }
 
-// // Initialize the database
  initialize_database();
 ?>

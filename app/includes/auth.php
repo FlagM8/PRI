@@ -5,7 +5,7 @@ class Auth {
     private $db;
     
     public function __construct() {
-        $this->db = new Database();
+        $this->db = Database::getInstance(); // Use the singleton instance
     }
     
     public function register($username, $password, $email = null) {

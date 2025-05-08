@@ -9,7 +9,7 @@ if (!$auth->isLoggedIn()) {
     exit;
 }
 
-$db = new Database();
+$db = Database::getInstance(); // Use the singleton instance
 $userId = $auth->getCurrentUserId();
 $username = $auth->getCurrentUsername();
 
@@ -56,16 +56,6 @@ if ($totalTests > 0) {
         $problematicWords = $latestTestDetails['problematic_words'];
     }
 }
-
-// Debugging output for fetched data
-echo '<pre>';
-echo "Tests Data:\n";
-print_r($tests);
-echo "\nPersonal Best:\n";
-print_r($personalBest);
-echo "\nProblematic Words (Most Recent Test):\n";
-print_r($problematicWords);
-echo '</pre>';
 
 // Handle test details request
 if (isset($_GET['test_id'])) {

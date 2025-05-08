@@ -7,7 +7,7 @@ $auth = new Auth();
 $isLoggedIn = $auth->isLoggedIn();
 $username = $auth->getCurrentUsername();
 
-$db = new Database();
+$db = Database::getInstance(); // Use the singleton instance
 
 $languages = $db->getLanguages();
 
