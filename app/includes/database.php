@@ -137,7 +137,6 @@ class Database {
     }
     
     public function getTestDetails($testId) {
-        // Ensure the test ID is correctly retrieved and used
         $stmt = $this->pdo->prepare("
             SELECT * FROM test_details WHERE test_id = ?
         ");

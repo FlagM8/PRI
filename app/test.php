@@ -15,7 +15,7 @@ $languages = $db->getLanguages();
 // Group languages by type
 $groupedLanguages = [];
 foreach ($languages as $language) {
-    $type = ucfirst($language['type']); // Capitalize the first letter of the type
+    $type = ucfirst($language['type']);
     if (!isset($groupedLanguages[$type])) {
         $groupedLanguages[$type] = [];
     }
@@ -60,27 +60,31 @@ foreach ($languages as $language) {
                     <div class="test-options">
                         <div class="form-group">
                             <label for="language-select">Language:</label>
-                            <select id="language-select">
-                                <?php foreach ($groupedLanguages as $type => $typeLanguages): ?>
-                                    <optgroup label="<?= htmlspecialchars($type) ?>">
-                                        <?php foreach ($typeLanguages as $language): ?>
-                                            <option value="<?= htmlspecialchars($language['id']) ?>">
-                                                <?= htmlspecialchars($language['name']) ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </optgroup>
-                                <?php endforeach; ?>
-                            </select>
+                            <div class="custom-select">
+                                <select id="language-select">
+                                    <?php foreach ($groupedLanguages as $type => $typeLanguages): ?>
+                                        <optgroup label="<?= htmlspecialchars($type) ?>">
+                                            <?php foreach ($typeLanguages as $language): ?>
+                                                <option value="<?= htmlspecialchars($language['id']) ?>">
+                                                    <?= htmlspecialchars($language['name']) ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </optgroup>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="duration-select">Duration:</label>
-                            <select id="duration-select">
-                                <option value="30">30 seconds</option>
-                                <option value="60" selected>1 minute</option>
-                                <option value="120">2 minutes</option>
-                                <option value="300">5 minutes</option>
-                            </select>
+                            <div class="custom-select">
+                                <select id="duration-select">
+                                    <option value="30">30 seconds</option>
+                                    <option value="60" selected>1 minute</option>
+                                    <option value="120">2 minutes</option>
+                                    <option value="300">5 minutes</option>
+                                </select>
+                            </div>
                         </div>
                         
                         <button id="start-test" class="button primary">Start Test</button>

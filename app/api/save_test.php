@@ -10,11 +10,20 @@ try {
 
     // Validate XML against the schema
     $xsdPath = XML_SCHEMA_PATH . '/tests.xsd';
-    $dom = new DOMDocument();
-    $dom->loadXML($xmlInput);
+    // $dom = new DOMDocument();
+    // $dom->loadXML($xmlInput);
 
-    if (!$dom->schemaValidate($xsdPath)) {
-        throw new Exception('Invalid XML format.');
+    // if (!$dom->schemaValidate($xsdPath)) {
+    //     throw new Exception('Invalid XML format.');
+    // }
+
+    $validationResult = validate_xml($xmlInput, $xsdPath);
+    if (!$validationResult['valid']) {
+        $errors = [];
+        foreach ($validationResult['errors'] as $error) {
+            $errors[] = trim($error->message);
+        }
+        throw new Exception('XML validation errors: ' . implode(', ', $errors));
     }
 
     // Parse XML

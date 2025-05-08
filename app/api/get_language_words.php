@@ -9,8 +9,7 @@ if (!isset($_GET['language_id'])) {
 }
 
 $languageId = intval($_GET['language_id']);
-$db = Database::getInstance(); // Use the singleton instance
-
+$db = Database::getInstance();
 $language = $db->getLanguageById($languageId);
 
 if ($language && isset($language['words'])) {

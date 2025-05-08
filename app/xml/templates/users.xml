@@ -26,7 +26,7 @@
         <div class="progress-graph">
           <h3>Progress Graph</h3>
           <div class="graph-container" id="progress-graph-container">
-            <!-- Graph will be rendered with JavaScript -->
+            <canvas id="progress-graph-canvas"></canvas>
             <div class="progress-data" style="display:none;">
               <xsl:for-each select="details/progress/time_point">
                 <div class="data-point" 
