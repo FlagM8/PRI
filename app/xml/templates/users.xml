@@ -37,6 +37,15 @@
               </xsl:for-each>
             </div>
           </div>
+          <!-- Debugging: Display raw progress data -->
+          <div class="debug-progress-data">
+            <h4>Debug: Progress Data</h4>
+            <ul>
+              <xsl:for-each select="details/progress/time_point">
+                <li>Time: <xsl:value-of select="@seconds" />, WPM: <xsl:value-of select="@wpm" />, Errors: <xsl:value-of select="@errors" /></li>
+              </xsl:for-each>
+            </ul>
+          </div>
         </div>
         
         <div class="problematic-chars">
