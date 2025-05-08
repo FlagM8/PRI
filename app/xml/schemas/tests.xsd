@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="typing_test">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="info">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="language_id" type="xs:integer" />
+                            <xs:element name="duration" type="xs:integer" />
+                            <xs:element name="wpm" type="xs:decimal" />
+                            <xs:element name="accuracy" type="xs:decimal" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="details">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="problematic_chars">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="char" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="value" type="xs:string" use="required" />
+                                                <xs:attribute name="count" type="xs:integer" use="required" />
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="problematic_words">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="word" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="value" type="xs:string" use="required" />
+                                                <xs:attribute name="count" type="xs:integer" use="required" />
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="progress">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="time_point" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:attribute name="seconds" type="xs:integer" use="required" />
+                                                <xs:attribute name="wpm" type="xs:decimal" use="required" />
+                                                <xs:attribute name="errors" type="xs:integer" use="required" />
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

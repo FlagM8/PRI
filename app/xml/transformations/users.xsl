@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  
+  <xsl:output method="html" indent="yes" encoding="UTF-8" />
+  
+  <xsl:template match="/">
+    <div class="test-details">
+      <xsl:apply-templates select="typing_test" />
+    </div>
+  </xsl:template>
+  
+  <xsl:template match="typing_test">
+    <div class="test-info">
+      <h2>Typing Test Resultsss</h2>
+      <div class="test-summary">
+        <p><strong>Language:</strong> <xsl:value-of select="info/language" /> (<xsl:value-of select="info/type" />)</p>
+        <p><strong>Duration:</strong> <xsl:value-of select="info/duration" /> seconds</p>
+        <p><strong>WPM:</strong> <xsl:value-of select="format-number(info/wpm, '#0.0')" /></p>
+        <p><strong>Accuracy:</strong> <xsl:value-of select="format-number(info/accuracy * 100, '#0.0')" />%</p>
+        <p><strong>Date:</strong> <xsl:value-of select="substring(info/date, 1, 19)" /></p>
+      </div>
+    </div>
+    
+    <xsl:if test="details">
+      <div class="test-details-container">
+        <div class="progress-graph">
+          <h3>Progress Graph</h3>
+          <div class="graph-container" id="progress-graph-container">
+            <!-- Graph will be rendered with JavaScript -->
+            <div class="progress-data" style="display:none;">
+              <xsl:for-each select="details/progress/time_point">
+                <div class="data-point" 
+                     data-seconds="{@seconds}" 
+                     data-wpm="{@wpm}" 
+                     data-errors="{@errors}">
+                </div>
+              </xsl:for-each>
+            </div>
+          </div>
+        </div>
+        
+        <div class="problematic-chars">
+          <h3>Character Heatmap</h3>
+          <div class="heatmap-container" id="char-heatmap-container">
+            <!-- Heatmap will be rendered with JavaScript -->
+            <div class="char-data" style="display:none;">
+              <xsl:for-each select="details/problematic_chars/char">
+                <div class="char-item" 
+                     data-char="{@value}" 
+                     data-count="{@count}">
+                </div>
+              </xsl:for-each>
+            </div>
+          </div>
+        </div>
+        
+        <div class="problematic-words">
+          <h3>Problematic Words</h3>
+          <xsl:choose>
+            <xsl:when test="count(details/problematic_words/word) > 0">
+              <ul class="word-list">
+                <xsl:for-each select="details/problematic_words/word">
+                  <li>
+                    <span class="word"><xsl:value-of select="@value" /></span>
+                    <span class="count">(<xsl:value-of select="@count" /> errors)</span>
+                  </li>
+                </xsl:for-each>
+              </ul>
+            </xsl:when>
+            <xsl:otherwise>
+              <p>No problematic words identified in this test.</p>
+            </xsl:otherwise>
+          </xsl:choose>
+        </div>
+      </div>
+    </xsl:if>
+    
+    <div class="actions">
+      <a href="test.php" class="button">Take New Test</a>
+      <a href="profile.php" class="button">Back to Profile</a>
+    </div>
+  </xsl:template>
+  
+</xsl:stylesheet>

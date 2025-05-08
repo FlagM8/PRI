@@ -1,0 +1,231 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Styles */
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+header nav ul li a.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Main Section Styles */
+main {
+    padding: 2rem 0;
+}
+
+h2 {
+    color: #444;
+    margin-bottom: 1rem;
+}
+
+/* Form Styles */
+form {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+.form-actions {
+    text-align: center;
+}
+
+.form-actions .button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button.primary {
+    background: #007bff;
+    color: #fff;
+}
+
+.button.secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+/* Alert Styles */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.alert.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.alert.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Test Section Styles */
+.test-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.test-options {
+    margin-bottom: 2rem;
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.test-header div {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.text-display {
+    background: #f9f9f9;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.input-area input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Results Section Styles */
+.test-results {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.results-summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2rem;
+}
+
+.result-item {
+    text-align: center;
+}
+
+.result-label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.result-value {
+    font-size: 1.5rem;
+    color: #007bff;
+}
+
+.result-section {
+    margin-bottom: 2rem;
+}
+
+.result-section h3 {
+    margin-bottom: 1rem;
+}
+
+.result-actions {
+    text-align: center;
+}
+
+.result-actions .button {
+    margin: 0 10px;
+}
+
+/* Footer Styles */
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+footer p {
+    margin: 0;
+}

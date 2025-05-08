@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <xs:element name="user">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="info" type="userInfoType" />
+        <xs:element name="tests" type="testsType" minOccurs="0" />
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:integer" use="required" />
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:complexType name="userInfoType">
+    <xs:sequence>
+      <xs:element name="username" type="xs:string" />
+      <xs:element name="email" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="testsType">
+    <xs:sequence>
+      <xs:element name="test" type="testSummaryType" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="testSummaryType">
+    <xs:sequence>
+      <xs:element name="language" type="xs:string" />
+      <xs:element name="type" type="languageTypeEnum" />
+      <xs:element name="duration" type="xs:integer" />
+      <xs:element name="wpm" type="xs:decimal" />
+      <xs:element name="accuracy" type="xs:decimal" />
+      <xs:element name="date" type="xs:dateTime" />
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:integer" use="required" />
+  </xs:complexType>
+  
+  <xs:simpleType name="languageTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="natural" />
+      <xs:enumeration value="programming" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>
