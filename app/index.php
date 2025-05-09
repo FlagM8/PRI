@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/auth.php';
-require_once __DIR__ . '/includes/database_init.php'; // Initialize the database
+require_once __DIR__ . '/includes/database_init.php';
 
 $auth = new Auth();
 $isLoggedIn = $auth->isLoggedIn();
@@ -53,9 +53,9 @@ $username = $auth->getCurrentUsername();
             <section>
                 <h2>Features</h2>
                 <ul>
-                    <li>Test your typing speed in multiple languages.</li>
-                    <li>Track your progress with detailed graphs and heatmaps.</li>
-                    <li>Save your results and compare with others.</li>
+                    <li>Test your typing speed in multiple languages and programming languages!.</li>
+                    <li>Track your progress with "detailed" "graphs" and heatmap.</li>
+                    <li>Save your results and track your progress.</li>
                 </ul>
             </section>
         </div>

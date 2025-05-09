@@ -4,7 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
+    // DOM Elements 
     const startTestButton = document.getElementById('start-test');
     const testConfigArea = document.querySelector('.test-config');
     const testArea = document.querySelector('.test-area');
@@ -79,9 +79,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log('Response data:', data); // Log response data
                 if (data.success) {
-                    const wordList = data.words.split(',').map(word => word.trim());
-                    testText = generateInfiniteWords(wordList);
-                    displayText();
+                    const wordList = data.words.split(',').map(word => word.trim()); // Split words by comma, trim spaces
+                    testText = generateInfiniteWords(wordList); // Generate "infinite" words, unless you type 10K wpm
+                    displayText(); //displays the ui
                     typingInput.value = '';
                     typingInput.focus();
                     testStarted = true;
@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function generateInfiniteWords(wordList) {
         const infiniteWords = [];
         while (infiniteWords.length < 1000) { // Arbitrary large number to simulate infinity
-            const shuffled = [...wordList].sort(() => Math.random() - 0.5);
-            infiniteWords.push(...shuffled);
+            const shuffled = [...wordList].sort(() => Math.random() - 0.5); // Shuffle the words by creating a shallow copy and sorting randomly
+            infiniteWords.push(...shuffled); //push the shuffled words into the infiniteWords array
         }
         return infiniteWords;
     }
@@ -115,13 +115,13 @@ document.addEventListener('DOMContentLoaded', function() {
      * Display the test text in the UI
      */
     function displayText() {
-        textDisplay.innerHTML = '';
+        textDisplay.innerHTML = ''; 
         
         testText.forEach((word, index) => {
-            const wordSpan = document.createElement('span');
-            wordSpan.className = index === 0 ? 'word current' : 'word';
+            const wordSpan = document.createElement('span'); 
+            wordSpan.className = index === 0 ? 'word current' : 'word'; // Highlight the current word
             
-            [...word].forEach(char => {
+            [...word].forEach(char => { //adds spans for each character, also adds a class characters
                 const charSpan = document.createElement('span');
                 charSpan.className = 'char';
                 charSpan.textContent = char;
@@ -164,18 +164,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkInput() {
         if (!testStarted) return;
         
-        const words = textDisplay.querySelectorAll('.word');
-        const currentWord = words[currentWordIndex];
-        const typedValue = typingInput.value;
+        const words = textDisplay.querySelectorAll('.word'); //selects from dom with this class
+        const currentWord = words[currentWordIndex]; //sets current word element being "typed"
+        const typedValue = typingInput.value; //typed value
         
         // Get the current word text
-        const wordText = testText[currentWordIndex];
+        const wordText = testText[currentWordIndex]; //current word text from the word array
         
-        // Check character by character
-        const chars = currentWord.querySelectorAll('.char');
+        // Check character by character from the currentWord
+        const chars = currentWord.querySelectorAll('.char'); 
         
-        for (let i = 0; i < chars.length; i++) {
-            if (i < typedValue.length) {
+        for (let i = 0; i < chars.length; i++) { 
+            if (i < typedValue.length) { 
                 chars[i].classList.remove('current');
                 
                 // Check if character is correct
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (testStarted) {
             const timeElapsed = testDuration - timeLeft;
             const wpm = parseInt(currentWpm.textContent);
-            const errors = Object.keys(errorChars).reduce((sum, key) => sum + errorChars[key], 0);
+            const errors = Object.keys(errorChars).reduce((sum, key) => sum + errorChars[key], 0); // gets array of keys, sum up values, adds each value to an accumulator sum
             
             progressData[timeElapsed] = {
                 wpm: wpm,
@@ -313,23 +313,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const graphContainer = document.getElementById('progress-graph');
         graphContainer.innerHTML = '';
         
-        // In a real application, use a charting library
-        // This is a simple placeholder that creates a basic graph
         const canvas = document.createElement('canvas');
         canvas.width = 400;
         canvas.height = 200;
         graphContainer.appendChild(canvas);
         
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const ctx = canvas.getContext('2d'); // Get the 2D context for drawing
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
         
         // Draw axes
-        ctx.beginPath();
+        ctx.beginPath(); // Draw X and Y axes
         ctx.moveTo(40, 20);
         ctx.lineTo(40, 180);
         ctx.lineTo(380, 180);
         ctx.strokeStyle = '#333';
-        ctx.stroke();
+        ctx.stroke(); //draws
         
         // Draw WPM data
         ctx.beginPath();

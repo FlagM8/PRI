@@ -10,6 +10,7 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f8f9fa;
+    padding-bottom: 80px; /* Add padding equal to the footer height */
 }
 
 .container {
@@ -351,7 +352,10 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem 0;
-    margin-top: 2rem;
+    position: fixed; /* Fix the footer to the bottom */
+    bottom: 0; /* Align it to the bottom of the screen */
+    width: 100%; /* Ensure it spans the full width */
+    z-index: 1000; /* Ensure it stays above other elements */
 }
 
 /* Centered Test Container */
