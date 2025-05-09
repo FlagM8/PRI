@@ -234,11 +234,13 @@ select {
 }
 
 .progress-graph {
-    height: 200px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 4px;
     padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 300px; /* Extended height */
 }
 
 #progress-graph {
@@ -267,20 +269,23 @@ select {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 40px; /* Reduced width */
+    height: 40px; /* Reduced height */
     border-radius: 4px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
+    font-size: 0.8rem; /* Reduced font size */
+    font-weight: bold;
+    color: #333;
 }
 
-.char-value {
-    font-size: 1.2rem;
-    font-weight: 500;
+.heat-char .char-value {
+    font-size: 1rem; /* Adjusted font size */
+    font-weight: bold;
 }
 
-.char-count {
-    font-size: 0.8rem;
+.heat-char .char-count {
+    font-size: 0.7rem; /* Adjusted font size */
     color: #666;
 }
 
@@ -313,17 +318,25 @@ select {
 }
 
 .problematic-words {
-    list-style-position: inside;
-    padding: 1rem;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 4px;
-    height: 200px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
+    max-height: 300px;
+}
+
+.problematic-words ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .problematic-words li {
     margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
 }
 
 .result-actions {
@@ -359,27 +372,33 @@ footer {
     padding: 2rem;
 }
 
+/* Heatmap Container */
 .heatmap-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Allow vertical scrolling if needed */
+    height: 250px; /* Adjusted height for better balance */
+    display: flex;
+    flex-direction: column; /* Align title and data vertically */
+    gap: 1rem; /* Add spacing between title and data */
+}
+
+.heatmap-container h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #343a40;
+    text-align: center; /* Center the title */
+}
+
+/* Heatmap Data */
+.char-data {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    justify-content: center;
-    overflow-y: auto;
-    max-height: 300px;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-}
-
-.graph-container {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    overflow: hidden;
+    justify-content: center; /* Center the heatmap data */
 }
 
 .custom-select {
@@ -430,4 +449,12 @@ footer {
     border-style: solid;
     border-color: #333 transparent transparent transparent;
     pointer-events: none;
+}
+
+/* Test Details Container */
+.test-details-container {
+    display: flex;
+    flex-direction: column; /* Align items in a column */
+    gap: 2rem; /* Add spacing between sections */
+    margin-top: 2rem;
 }

@@ -48,18 +48,15 @@
           </div>
         </div>
         
-        <div class="problematic-chars">
+        <div class="heatmap-container" id="char-heatmap-container">
           <h3>Character Heatmap</h3>
-          <div class="heatmap-container" id="char-heatmap-container">
-            <!-- Heatmap will be rendered with JavaScript -->
-            <div class="char-data" style="display:none;">
-              <xsl:for-each select="details/problematic_chars/char">
-                <div class="char-item" 
-                     data-char="{@value}" 
-                     data-count="{@count}">
-                </div>
-              </xsl:for-each>
-            </div>
+          <div class="char-data" style="display:none;">
+            <xsl:for-each select="details/problematic_chars/char">
+              <div class="char-item" 
+                   data-char="{@value}" 
+                   data-count="{@count}">
+              </div>
+            </xsl:for-each>
           </div>
         </div>
         
