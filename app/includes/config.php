@@ -1,6 +1,4 @@
 <?php
-// Configuration settings for the typing test application
-
 // Database configuration
 define('DB_PATH', getenv('DB_PATH') ?: __DIR__ . '/../data/typing_test.db');
 
@@ -33,7 +31,6 @@ function validate_xml($xml_string, $xsd_file) {
     return ['valid' => true, 'errors' => []];
 }
 
-// Function to transform XML using XSL
 function transform_xml($xml_string, $xsl_file) {
     $xml = new DOMDocument();
     $xml->loadXML($xml_string);

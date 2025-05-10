@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Render problematic words
+
         wordItems.forEach(item => {
             const word = item.querySelector('.word').textContent;
             const count = item.querySelector('.count').textContent;

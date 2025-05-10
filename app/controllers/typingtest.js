@@ -1,10 +1,5 @@
-/**
- * Typing Test Controller
- * Handles the functionality for the typing speed test
- */
 
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements 
+document.addEventListener('DOMContentLoaded', function() { 
     const startTestButton = document.getElementById('start-test');
     const testConfigArea = document.querySelector('.test-config');
     const testArea = document.querySelector('.test-area');
@@ -22,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const languageSelect = document.getElementById('language-select');
     const durationSelect = document.getElementById('duration-select');
     
-    // Variables
     let timer;
     let timeLeft;
     let testStarted = false;
@@ -35,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let progressData = {};
     let testDuration;
 
-    // Event Listeners
     startTestButton.addEventListener('click', startTest);
     typingInput.addEventListener('input', checkInput);
     retryButton.addEventListener('click', resetTest);
@@ -44,9 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         saveButton.addEventListener('click', saveResults);
     }
 
-    /**
-     * Start the typing test
-     */
+
     function startTest() {
         testConfigArea.style.display = 'none';
         testArea.style.display = 'block';
@@ -62,18 +53,14 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchTestText(languageId);
     }
 
-    /**
-     * Fetch sample text for the test from the server
-     * @param {number} languageId - ID of the selected language
-     */
     function fetchTestText(languageId) {
         fetch(`api/get_language_words.php?language_id=${languageId}`)
             .then(response => {
-                console.log('Response status:', response.status); // Log response status
+                console.log('Response status:', response.status); 
                 return response.json();
             })
             .then(data => {
-                console.log('Response data:', data); // Log response data
+                console.log('Response data:', data); 
                 if (data.success) {
                     const wordList = data.words.split(',').map(word => word.trim()); // Split words by comma, trim spaces
                     testText = generateInfiniteWords(wordList); // Generate "infinite" words, unless you type above 200 wpm and are willing to waste 5 minutes of your life
@@ -88,16 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('Error fetching words:', error); // Log fetch error
+                console.error('Error fetching words:', error); 
                 alert('Error fetching words. Please try again.');
             });
     }
 
-    /**
-     * Generate an infinite stream of random words
-     * @param {array} wordList - Array of words to shuffle and pick from
-     * @return {array} Infinite array of random words
-     */
     function generateInfiniteWords(wordList) {
         const infiniteWords = [];
         while (infiniteWords.length < 1000) { 
@@ -107,17 +89,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return infiniteWords;
     }
 
-    /**
-     * Display the test text in the UI
-     */
+
     function displayText() {
         textDisplay.innerHTML = ''; 
         
         testText.forEach((word, index) => {
             const wordSpan = document.createElement('span'); 
-            wordSpan.className = index === 0 ? 'word current' : 'word'; // Highlight the current word
+            wordSpan.className = index === 0 ? 'word current' : 'word'; 
             
-            [...word].forEach(char => { //adds spans for each character, also adds a class characters
+            [...word].forEach(char => { 
                 const charSpan = document.createElement('span');
                 charSpan.className = 'char';
                 charSpan.textContent = char;
@@ -126,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             textDisplay.appendChild(wordSpan);
             
-            // Add space after word (except last word)
             if (index < testText.length - 1) {
                 const spaceSpan = document.createElement('span');
                 spaceSpan.className = 'char space';
@@ -136,17 +115,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Update the timer and end test when time runs out
-     */
     function updateTimer() {
         timeLeft--;
         timeRemaining.textContent = timeLeft;
         
-        // Update WPM calculation every second
         calculateWPM();
         
-        // Track progress for the graph
         trackProgress();
         
         if (timeLeft <= 0) {
@@ -154,27 +128,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    /**
-     * Check user input against the test text
-     */
     function checkInput() {
         if (!testStarted) return;
         
-        const words = textDisplay.querySelectorAll('.word'); //selects from dom with this class
-        const currentWord = words[currentWordIndex]; //sets current word element being "typed"
-        const typedValue = typingInput.value; //typed value
+        const words = textDisplay.querySelectorAll('.word'); 
+        const currentWord = words[currentWordIndex]; 
+        const typedValue = typingInput.value;
         
-        // Get the current word text
-        const wordText = testText[currentWordIndex]; //current word text from the word array
+        const wordText = testText[currentWordIndex]; 
         
-        // Check character by character from the currentWord
         const chars = currentWord.querySelectorAll('.char'); 
         
         for (let i = 0; i < chars.length; i++) { 
             if (i < typedValue.length) { 
                 chars[i].classList.remove('current');
                 
-                // Check if character is correct
                 if (typedValue[i] === wordText[i]) {
                     chars[i].classList.add('correct');
                     chars[i].classList.remove('incorrect');
@@ -182,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     chars[i].classList.add('incorrect');
                     chars[i].classList.remove('correct');
                     
-                    // Track problematic characters
                     if (!errorChars[wordText[i]]) {
                         errorChars[wordText[i]] = 0;
                     }
@@ -192,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 chars[i].classList.remove('correct');
                 chars[i].classList.remove('incorrect');
                 
-                // Highlight current position
                 if (i === typedValue.length) {
                     chars[i].classList.add('current');
                 } else {
@@ -201,9 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Check for word completion (space)
         if (typedValue.endsWith(' ') || (typedValue.length === wordText.length && currentWordIndex === testText.length - 1)) {
-            // Count correct characters
             const typedWord = typedValue.trim();
             for (let i = 0; i < Math.min(typedWord.length, wordText.length); i++) {
                 if (typedWord[i] === wordText[i]) {
@@ -212,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             totalChars += wordText.length;
             
-            // Track problematic words
             if (typedWord !== wordText) {
                 if (!errorWords[wordText]) {
                     errorWords[wordText] = 0;
@@ -220,40 +183,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 errorWords[wordText]++;
             }
             
-            // Move to next word
             currentWord.classList.remove('current');
             currentWordIndex++;
             typingInput.value = '';
             
-            // If there are more words, highlight the next one
             if (currentWordIndex < testText.length) {
                 words[currentWordIndex].classList.add('current');
             } else {
-                // End test if all words are typed
                 endTest();
             }
         }
         
-        // Calculate accuracy
         calculateAccuracy();
     }
 
-    /**
-     * Calculate words per minute
-     */
+
     function calculateWPM() {
         if (testStarted) {
-            // WPM = (characters typed / 5) / minutes
-            const timeElapsed = (testDuration - timeLeft) / 60; // convert to minutes
+            const timeElapsed = (testDuration - timeLeft) / 60; 
             const wpm = timeElapsed > 0 ? Math.round((correctChars / 5) / timeElapsed) : 0;
             
             currentWpm.textContent = wpm;
         }
     }
 
-    /**
-     * Calculate typing accuracy percentage
-     */
     function calculateAccuracy() {
         if (totalChars > 0) {
             const accuracy = Math.round((correctChars / totalChars) * 100);
@@ -261,9 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    /**
-     * Track progress for the graph
-     */
+
     function trackProgress() {
         if (testStarted) {
             const timeElapsed = testDuration - timeLeft;
@@ -277,34 +228,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    /**
-     * End the typing test and show results
-     */
     function endTest() {
         clearInterval(timer);
         testStarted = false;
         
-        // Hide test area and show results
         testArea.style.display = 'none';
         resultsArea.style.display = 'block';
         
-        // Show final results
         resultWpm.textContent = currentWpm.textContent;
         resultAccuracy.textContent = currentAccuracy.textContent + '%';
         
-        // Draw the progress graph
         drawProgressGraph();
         
-        // Show character heatmap
         showCharHeatmap();
         
-        // Show problematic words
         showProblematicWords();
     }
 
-    /**
-     * Draw the progress graph
-     */
     function drawProgressGraph() {
         const graphContainer = document.getElementById('progress-graph');
         graphContainer.innerHTML = '';
@@ -314,16 +254,15 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.height = 200;
         graphContainer.appendChild(canvas);
         
-        const ctx = canvas.getContext('2d'); // Get the 2D context for drawing
-        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        const ctx = canvas.getContext('2d'); 
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Draw axes
-        ctx.beginPath(); // Draw X and Y axes
+        ctx.beginPath();
         ctx.moveTo(40, 20);
         ctx.lineTo(40, 180);
         ctx.lineTo(380, 180);
         ctx.strokeStyle = '#333';
-        ctx.stroke(); //draws
+        ctx.stroke();
         
         ctx.beginPath();
         let firstPoint = true;
@@ -344,7 +283,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.lineWidth = 2;
         ctx.stroke();
         
-        // Add labels
         ctx.fillStyle = '#333';
         ctx.font = '12px Arial';
         ctx.fillText('Time (s)', 200, 195);
@@ -354,24 +292,19 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.restore();
     }
 
-    /**
-     * Show character heatmap (most problematic characters)
-     */
     function showCharHeatmap() {
         const heatmapContainer = document.getElementById('char-heatmap');
         heatmapContainer.innerHTML = '';
         
-        // Sort characters by error frequency
         const sortedChars = Object.entries(errorChars)
             .sort((a, b) => b[1] - a[1])
-            .slice(0, 10); // Top 10
+            .slice(0, 10); 
         
         sortedChars.forEach(([char, count]) => {
             const charDiv = document.createElement('div');
             charDiv.className = 'heat-char';
             charDiv.innerHTML = `<span class="char-value">${char}</span><span class="char-count">${count}</span>`;
             
-            // Add intensity based on error count
             const intensity = Math.min(count * 20, 100);
             charDiv.style.backgroundColor = `rgba(255, 99, 71, ${intensity/100})`;
             
@@ -379,17 +312,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Show problematic words
-     */
+
     function showProblematicWords() {
         const wordsContainer = document.getElementById('problematic-words');
         wordsContainer.innerHTML = '';
         
-        // Sort words by error frequency
         const sortedWords = Object.entries(errorWords)
             .sort((a, b) => b[1] - a[1])
-            .slice(0, 10); // Top 10
+            .slice(0, 10); 
         
         sortedWords.forEach(([word, count]) => {
             const li = document.createElement('li');
@@ -398,9 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /**
-     * Reset the test to try again
-     */
     function resetTest() {
         clearInterval(timer);
         currentWordIndex = 0;
@@ -411,21 +338,15 @@ document.addEventListener('DOMContentLoaded', function() {
         progressData = {};
         testStarted = false;
         
-        // Hide results and show config
         resultsArea.style.display = 'none';
         testConfigArea.style.display = 'block';
     }
 
-    /**
-     * Save test results to the database via XML
-     */
     function saveResults() {
-        // Get final results
         const wpm = parseInt(currentWpm.textContent);
         const accuracy = parseInt(currentAccuracy.textContent);
         const languageId = languageSelect.value;
 
-        // Construct XML data
         const xmlData = `
             <typing_test>
                 <info>
@@ -454,7 +375,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </typing_test>
         `;
 
-        // Send XML data to the server
         fetch('api/save_test.php', {
             method: 'POST',
             headers: {

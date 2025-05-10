@@ -5,7 +5,7 @@ class Auth {
     private $db;
     
     public function __construct() {
-        $this->db = Database::getInstance(); // Use the singleton instance
+        $this->db = Database::getInstance();
     }
     
     public function register($username, $password, $email = null) {
@@ -44,7 +44,6 @@ class Auth {
         $user = $this->db->verifyUser($username, $password);
         
         if ($user) {
-            // Store user data in session
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             
@@ -55,10 +54,8 @@ class Auth {
     }
     
     public function logout() {
-        // Unset all session variables
         $_SESSION = [];
         
-        // Destroy the session
         session_destroy();
         
         return ['success' => true, 'message' => 'Logout successful'];

@@ -2,10 +2,8 @@
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/auth.php';
 
-// Initialize authentication
 $auth = new Auth();
 
-// Check if already logged in
 if ($auth->isLoggedIn()) {
     header('Location: index.php');
     exit;
@@ -14,7 +12,6 @@ if ($auth->isLoggedIn()) {
 $error = '';
 $success = '';
 
-// Process login form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';

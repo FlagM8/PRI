@@ -1,26 +1,19 @@
 <?php
-// Ensure the database is initialized when this file is included
 
-// Database path
 $dbPath = __DIR__ . '/../data/typing_test.db';
 
-// Check if database directory exists, if not create it
 $dbDir = dirname($dbPath);
 if (!file_exists($dbDir)) {
     mkdir($dbDir, 0755, true);
 }
 
 try {
-    // Create new PDO instance
     $pdo = new PDO("sqlite:$dbPath");
     
-    // Set error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Enable foreign keys
     $pdo->exec('PRAGMA foreign_keys = ON');
     
-    // Create users table
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,7 +24,6 @@ try {
         )
     ");
     
-    // Create languages table with a new 'words' column
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS langs (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,7 +33,6 @@ try {
         )
     ");
     
-    // Create typing_tests table
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS typing_tests (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,7 +47,6 @@ try {
         )
     ");
     
-    // Create test_details table for storing mistakes and timing
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS test_details (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,7 +58,6 @@ try {
         )
     ");
     
-    // Insert default languages with extended example words only if the table is empty
     $stmt = $pdo->query("SELECT COUNT(*) FROM langs");
     if ($stmt->fetchColumn() == 0) {
         $languages = [
