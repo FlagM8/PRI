@@ -48,21 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
      * Start the typing test
      */
     function startTest() {
-        // Hide config and show test area
         testConfigArea.style.display = 'none';
         testArea.style.display = 'block';
         resultsArea.style.display = 'none';
         
-        // Get the selected language and duration
         const languageId = languageSelect.value;
         testDuration = parseInt(durationSelect.value);
         timeLeft = testDuration;
         
-        // Update the UI
         timeRemaining.textContent = timeLeft;
         resultDuration.textContent = testDuration + 's';
         
-        // Fetch test text based on selected language
         fetchTestText(languageId);
     }
 
@@ -80,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Response data:', data); // Log response data
                 if (data.success) {
                     const wordList = data.words.split(',').map(word => word.trim()); // Split words by comma, trim spaces
-                    testText = generateInfiniteWords(wordList); // Generate "infinite" words, unless you type 10K wpm
+                    testText = generateInfiniteWords(wordList); // Generate "infinite" words, unless you type above 200 wpm and are willing to waste 5 minutes of your life
                     displayText(); //displays the ui
                     typingInput.value = '';
                     typingInput.focus();
@@ -104,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function generateInfiniteWords(wordList) {
         const infiniteWords = [];
-        while (infiniteWords.length < 1000) { // Arbitrary large number to simulate infinity
+        while (infiniteWords.length < 1000) { 
             const shuffled = [...wordList].sort(() => Math.random() - 0.5); // Shuffle the words by creating a shallow copy and sorting randomly
             infiniteWords.push(...shuffled); //push the shuffled words into the infiniteWords array
         }
@@ -329,7 +325,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.strokeStyle = '#333';
         ctx.stroke(); //draws
         
-        // Draw WPM data
         ctx.beginPath();
         let firstPoint = true;
         

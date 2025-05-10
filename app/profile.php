@@ -37,7 +37,6 @@ if ($totalTests > 0) {
         }
         $testCounts[$testKey]++;
 
-        // Track personal best
         if (!$personalBest || $test['wpm'] > $personalBest['wpm']) {
             $personalBest = $test;
         }
@@ -46,24 +45,20 @@ if ($totalTests > 0) {
     $avgWpm = round($totalWpm / $totalTests, 2);
     $avgAccuracy = round($totalAccuracy / $totalTests, 2);
 
-    // Find the most taken test
     arsort($testCounts);
     $mostTakenTest = array_key_first($testCounts);
 
-    // Fetch problematic words from the most recent test
     $latestTestDetails = $db->getTestDetails($tests[0]['id']);
     if ($latestTestDetails && isset($latestTestDetails['problematic_words'])) {
         $problematicWords = $latestTestDetails['problematic_words'];
     }
 }
 
-// Handle test details request
 if (isset($_GET['test_id'])) {
     try {
         $testId = (int) $_GET['test_id'];
         $testXml = $db->generateTestXml($testId);
 
-        // Transform XML using XSL
         $xslPath = XML_TRANSFORM_PATH . '/tests.xsl';
         $html = transform_xml($testXml, $xslPath);
 

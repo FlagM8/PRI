@@ -47,11 +47,11 @@ function transform_xml($xml_string, $xsl_file) {
     return $processor->transformToXML($xml);
 }
 
-function initialize_database() {
-    $db = new PDO('sqlite:' . DB_PATH);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// function initialize_database() {
+//     $db = new PDO('sqlite:' . DB_PATH);
+//     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-}
+// }
 
- initialize_database();
+//  initialize_database();
 ?>

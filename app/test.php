@@ -7,12 +7,11 @@ $auth = new Auth();
 $isLoggedIn = $auth->isLoggedIn();
 $username = $auth->getCurrentUsername();
 
-$db = Database::getInstance(); // Use the singleton instance
+$db = Database::getInstance();
 
 $languages = $db->getLanguages();
 
 
-// Group languages by type
 $groupedLanguages = [];
 foreach ($languages as $language) {
     $type = ucfirst($language['type']);
